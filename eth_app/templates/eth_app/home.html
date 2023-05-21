@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ethereum App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://img.freepik.com/free-vector/dark-wavy-colors-background_23-2148403785.jpg?w=740&t=st=1684687097~exp=1684687697~hmac=62248255f3d7463789b933bb20cee0a2028ebcb849f84fb01c3b3669da14d309');
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #191449bb;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+            padding: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        button[type="submit"] {
+            background-color: #5900ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #12042c;
+        }
+
+        .address-info {
+            margin-top: 30px;
+        }
+
+        .balance {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .transaction-list {
+            margin-top: 20px;
+        }
+
+        .transaction-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-item strong {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="text-center">Ethereum App</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="ethereum_address">Ethereum Address</label>
+                    <input type="text" class="form-control" id="ethereum_address" name="ethereum_address" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Fetch</button>
+            </form>
+
+            {% if ethereum_address %}
+                <div class="address-info">
+                    <h2 class="text-center">Address: {{ ethereum_address }}</h2>
+                    <div class="balance text-center">
+                        Balance: {{ balance }}
+                    </div>
+                    <div class="transaction-list">
+                        <h3>Recent Transactions:</h3>
+                        {% for transaction in recent_transactions %}
+                            <div class="transaction-item">
+                                <strong>Transaction Hash:</strong> {{ transaction.hash }}<br>
+                                <strong>From:</strong> {{ transaction.from }}<br>
+                                <strong>To:</strong> {{ transaction.to }}<br>
+                                <strong>Value:</strong> {{ transaction.value }}<br>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="example-addresses mt-4">
+                <h3>Example Addresses you can checkout:</h3>
+                <ul>
+                    <li>
+                        <strong>Address 1:</strong> 0x71C7656EC7ab88b098defB751B7401B5f6d8976F<br>
+                        <strong>Balance:</strong> 3.55 ETH
+                    </li>
+                    <li>
+                        <strong>Address 2:</strong> 0x165CD37b4C644C2921454429E7F9358d18A45e14<br>
+                        <strong>Balance:</strong> 8.35 ETH
+                    </li>
+                    <li>
+                        <strong>Address 3:</strong> 0x210b3cb99fa1de0a64085fa80e18c22fe4722a1b<br>
+                        <strong>Balance:</strong> 3.376 ETH
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+  </div>
+    
+</body>
+</html>
